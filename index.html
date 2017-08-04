@@ -55,9 +55,21 @@
 
 				<section>... slow!</section>
 
-				<section>Let's find out why!</section>
+				<section>
+					<p>select statements indexing vs order by / group by optimization</p>
+					<p>indexes are at the heart of everything</p>
+					<p>indexes are based on good database design</p>
+				</section>
 
-				<section>And now, for some theory!</section>
+				<section>
+					<p>When to use existing / built in functionality to store data and when to create new tables.</p>
+				</section>
+
+				<section>
+					<p>additionally when you create new tables, what should they look like?</p>
+					<p>very much depends on your use case and how you're going to interact with the data</p>
+				</section>
+
 
 				<section>
 					<h1>Tables, rows, columns, data types</h1>
@@ -81,9 +93,43 @@
 					<p><img src="assets/pix/posts.png" alt=""></p>
 				</section>
 
-				<section>Slide 2</section>
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					How to make queries fast?
+
+					Know how the optimizer works!
+
+					Regarding NULLs
+					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">If an indexed column cannot contain any NULL values, declare it as NOT NULL when you create the table. The optimizer can better determine which index is most effective to use for a query, when it knows whether each column contains NULL values <footer><a href="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html</a></footer></blockquote>
+					<aside class="notes">https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html</aside>
+
+				</section>
+				<section>
+					If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. For example, if you have a three-column index on (col1, col2, col3), you have indexed search capabilities on (col1), (col1, col2), and (col1, col2, col3). For more information, see Section 8.3.5, “Multiple-Column Indexes”.
+
+
+					<p>https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html</p>
+				</section>
+				<section>
+					<p>To retrieve rows from other tables when performing joins. MySQL can use indexes on columns more efficiently if they are declared as the same type and size. In this context, VARCHAR and CHAR are considered the same if they are declared as the same size. For example, VARCHAR(10) and CHAR(10) are the same size, but VARCHAR(10) and CHAR(15) are not.
+
+					For comparisons between nonbinary string columns, both columns should use the same character set. For example, comparing a utf8 column with a latin1 column precludes use of an index.
+
+					Comparison of dissimilar columns (comparing a string column to a temporal or numeric column, for example) may prevent use of indexes if values cannot be compared directly without conversion. For a given value such as 1 in the numeric column, it might compare equal to any number of values in the string column such as '1', ' 1', '00001', or '01.e1'. This rules out use of any indexes for the string column.</p>
+
+					<p>https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html</p>
+
+					<p>MySQL can use multiple-column indexes for queries that test all the columns in the index, or queries that test just the first column, the first two columns, the first three columns, and so on. If you specify the columns in the right order in the index definition, a single composite index can speed up several kinds of queries on the same table.</p>
+				</section>
+
+				<section>
+					<p>Indexes are less important for queries on small tables, or big tables where report queries process most or all of the rows. When a query needs to access most of the rows, reading sequentially is faster than working through an index. Sequential reads minimize disk seeks, even if not all the rows are needed for the query. See Section 8.2.1.19, “Avoiding Full Table Scans” for details.</p>
+				</section>
+
+				<section>
+					<p>If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. For example, if you have a three-column index on (col1, col2, col3), you have indexed search capabilities on (col1), (col1, col2), and (col1, col2, col3).</p>
+				</section>
+
+
 
 			</div>
 		</div>
