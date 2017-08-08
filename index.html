@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>"Things you didn't know you need to know about WordPress and databases" talk by Gabor Javorszky – WordCamp Brighton, 18th August 2017</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/solarized.css">
@@ -25,35 +25,43 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h2>Things you didn't know you need to know about WordPress and Databases</h2>
-					<p>by Gabor Javorszky<br />
-						<small>@javorszky</small></p>
+					<h2>Things you didn't know you need to know about WordPress and databases</h2>
+					<p>by Gabor Javorszky</p>
+					<p class="fragment">crash course into database architecture</p>
+					<aside class="notes">
+						<p><small>(full disclosure: I'm not a certified DB architect)</small></p>
+					</aside>
 				</section>
-				<!-- end of slide 1 -->
 
 				<section>
-					<h2>SQL pronounciation</h2>
+					<h1>Assumptions</h1>
 					<ol>
-						<li>es - queue - el</li>
-						<li>"sequel"</li>
+						<li>
+							<p>Site is large with lots of data</p>
+						</li>
+						<li>
+							<p>potentially one with WooCommerce</p>
+						</li>
 					</ol>
-
 				</section>
-				<!-- end of slide 2 -->
 
 				<section>
-					<h2>common queries</h2>
+					<h2>common (slow) queries</h2>
 					<blockquote>get me all the orders for user 4</blockquote>
 					<blockquote>get me all subscriptions where the next payment date is between X and Y</blockquote>
 					<blockquote>get me all orders where the total is $19.92</blockquote>
 					<blockquote>get me the sum of all order totals where the order date is in May and order by order total. or date</blockquote>
 				</section>
 
-				<section>All of those are going to be</section>
+				<section>
+					<blockquote>basically doing anything on the admin area</blockquote>
+				</section>
 
-				<section>... really ...</section>
-
-				<section>... slow!</section>
+				<section>
+					<p>All of those are going to be</p>
+					<p class="fragment">...really...</p>
+					<p class="fragment">...slow.</p>
+				</section>
 
 				<section>
 					<p>select statements indexing vs order by / group by optimization</p>

@@ -1467,3 +1467,15 @@ body {
 .zoomed .reveal .roll span:after {
 	visibility: hidden;
 }
+
+/*********************************************
+ * Attribution
+ *********************************************/
+.slides::after {
+	content: '@javorszky';
+	display: block;
+	position: absolute;
+	bottom: 15px;
+	left: 15px;
+	font-size: 0.7em;
+}
