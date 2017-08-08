@@ -25,8 +25,8 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<h2>Things you didn't know you need to know about WordPress and databases</h2>
-					<p>by Gabor Javorszky</p>
+					<h1>Things you didn't know you need to know about WordPress and databases</h2>
+
 					<p class="fragment">crash course into database architecture</p>
 					<aside class="notes">
 						<p><small>(full disclosure: I'm not a certified DB architect)</small></p>
@@ -64,20 +64,44 @@
 				</section>
 
 				<section>
+					<h1>The Talk</h1>
+					<ul>
+						<li>indexes and how to use them</li>
+						<li>storing data in multiple tables vs one table - foreign keys and why they're awesome</li>
+						<li>tools to measure stuff</li>
+					</ul>
+					<aside class="notes">
+						<p>Can I help existing sites? - probably not</p>
+						<p>Can I help you build better plugins / themes? - hope so</p>
+					</aside>
+				</section>
+
+				<!-- indexes part -->
+				<section>
+					<h1>Indexes</h1>
+					<p>What are they?</p>
+					<p>Why are they important?</p>
+					<p>How do they work?</p>
+					<p>Indexable, unindexable (looking at you, postmeta value!)</p>
+				</section>
+
+				<section>
+					<h1>What are indexes</h1>
+				</section>
+
+				<section>
+					<img src="assets/pix/j-zamora-267753.jpg" alt="">
+				</section>
+
+				<section>
+					<img src="assets/pix/sanwal-deen-93466.jpg" alt="">
+				</section>
+
+				<section>
 					<p>select statements indexing vs order by / group by optimization</p>
 					<p>indexes are at the heart of everything</p>
 					<p>indexes are based on good database design</p>
 				</section>
-
-				<section>
-					<p>When to use existing / built in functionality to store data and when to create new tables.</p>
-				</section>
-
-				<section>
-					<p>additionally when you create new tables, what should they look like?</p>
-					<p>very much depends on your use case and how you're going to interact with the data</p>
-				</section>
-
 
 				<section>
 					<h1>Tables, rows, columns, data types</h1>
@@ -88,13 +112,7 @@
 					</ul>
 				</section>
 
-				<section>
-					<h1>Indexes</h1>
-					<p>What are they?</p>
-					<p>Why are they important?</p>
-					<p>How do they work?</p>
-					<p>Indexable, unindexable (looking at you, postmeta value!)</p>
-				</section>
+
 
 				<section>
 					<h1>WP DB - posts</h1>
@@ -137,7 +155,15 @@
 					<p>If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. For example, if you have a three-column index on (col1, col2, col3), you have indexed search capabilities on (col1), (col1, col2), and (col1, col2, col3).</p>
 				</section>
 
+				<!-- Multiple tables part -->
+				<section>
+					<p>When to use existing / built in functionality to store data and when to create new tables.</p>
+				</section>
 
+				<section>
+					<p>additionally when you create new tables, what should they look like?</p>
+					<p>very much depends on your use case and how you're going to interact with the data</p>
+				</section>
 
 			</div>
 		</div>
