@@ -100,21 +100,35 @@
 				</section>
 
 				<section>
-					<p>select statements indexing vs order by / group by optimization</p>
-					<p>indexes are at the heart of everything</p>
-					<p>indexes are based on good database design</p>
+					<h2>How do indexes work?</h2>
+					<p>From <a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">MySQL documentation:</a></p>
+					<blockquote>Indexes are used to find rows with specific column values quickly. Without an index, MySQL must begin with the first row and then read through the entire table to find the relevant rows. The larger the table, the more this costs. If the table has an index for the columns in question, MySQL can quickly determine the position to seek to in the middle of the data file without having to look at all the data. This is much faster than reading every row sequentially.</blockquote>
+					<aside class="notes">
+						<p>Extra data stored in the same physical file as the InnoDB tables. Indexes are table specific.</p>
+					</aside>
 				</section>
 
 				<section>
-					<h1>Tables, rows, columns, data types</h1>
+					<h2>Why are they important?</h2>
+					<p>In short: well designed indexes will get you the data in a fast, efficient manner.</p>
+					<p>You can do more on the same hardware => cheaper hosting => faster site => happier customers => more income / profit</p>
+				</section>
+
+				<section>
+					<h2>Tables, rows, columns, data types</h2>
 					<ul>
-						<li>integer, signed, unsigned</li>
-						<li>text, varchar, longtext</li>
-						<li>date, timestamp, datetime</li>
+						<li>numeric: INTEGER, BIGINT, SIGNED / UNSIGNED</li>
+						<li>string: TEXT, VARCHAR, LONGTEXT</li>
+						<li>date type: DATE, TIMESTAMP, DATETIME</li>
+						<li>specifying character lengths: VARCHAR(191), BIGINT(20)</li>
 					</ul>
 				</section>
 
-
+				<section>
+					<h1>What should be indexed?</h1>
+					<p><a href="">MySQL documentation</a></p>
+					<blockquote>Although it can be tempting to create an indexes for every possible column used in a query, unnecessary indexes waste space and waste time for MySQL to determine which indexes to use. Indexes also add to the cost of inserts, updates, and deletes because each index must be updated. You must find the right balance to achieve fast queries using the optimal set of indexes.</blockquote>
+				</section>
 
 				<section>
 					<h1>WP DB - posts</h1>
@@ -122,6 +136,7 @@
 				</section>
 
 				<section>
+					<p>select statements indexing vs order by / group by optimization</p>
 					How to make queries fast?
 
 					Know how the optimizer works!
