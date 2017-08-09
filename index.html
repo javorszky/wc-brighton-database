@@ -122,6 +122,18 @@
 						<li>date type: DATE, TIMESTAMP, DATETIME</li>
 						<li>specifying character lengths: VARCHAR(191), BIGINT(20)</li>
 					</ul>
+					<div class="fragment">
+						<p>Examples of signed / unsigned. "Can it have a negative sign?". Highest binary place is the sign</p>
+						<pre><code class="php" data-trim>
+							// signed -127 – +127
+							000101011 = +43
+							100101011 = -43
+
+							// unsigned 0 – 255
+							000101011 = 43
+							100101011 = 171
+						</code></pre>
+					</div>
 				</section>
 
 				<section>
