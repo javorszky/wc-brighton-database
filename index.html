@@ -156,6 +156,12 @@
 					<p>From <a href="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">optimizing InnoDB queries</a></p>
 					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">If an indexed column cannot contain any NULL values, declare it as NOT NULL when you create the table. The optimizer can better determine which index is most effective to use for a query, when it knows whether each column contains NULL values.</blockquote>
 					<p><strong>tldr;</strong> if it shouldn't be NULL, declare it so. It will be faster.</p>
+					<p><strong>protip: </strong>primary keys will always be NOT NULL!</p>
+					<p><strong>protip2: </strong>unique keys permit multiple NULL values!</p>
+					<aside class="notes">
+						<p>PRIMARY KEY: <br><br>A unique index where all key columns must be defined as NOT NULL. If they are not explicitly declared as NOT NULL, MySQL declares them so implicitly (and silently). A table can have only one PRIMARY KEY. The name of a PRIMARY KEY is always PRIMARY, which thus cannot be used as the name for any other kind of index.</p>
+						<p>UNIQUE KEY:<br><br>A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. For all engines, a UNIQUE index permits multiple NULL values for columns that can contain NULL.</p>
+					</aside>
 				</section>
 
 				<section>
