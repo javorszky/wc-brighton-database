@@ -187,16 +187,66 @@
 				<section data-transition="slide-in none">
 					<h1>WP DB - posts</h1>
 					<img src="assets/pix/posts.png" alt="">
+					<aside class="notes">
+						Raw capture of the entire posts table.
+					</aside>
 				</section>
 
 				<section data-transition="none">
 					<h1>WP DB - posts</h1>
 					<img src="assets/pix/posts-unsigned.png" alt="">
+					<aside class="notes">
+						Highlighted the unsigned part. Reason post_parent and ID have the same type and length is because post_parent refers to an ID. post_author refers to an ID in the users table, which is also the same type / length. And because IDs cannot be negative, unsigned makes sense.
+					</aside>
 				</section>
 
 				<section data-transition="none">
-					<h1>WP DB - posts</h1>
-					<img src="assets/pix/posts-unique.png" alt="">
+					<section>
+						<h1>WP DB - posts</h1>
+						<img src="assets/pix/posts-unique.png" alt="">
+						<aside class="notes">
+							There's a bug in Sequel pro in giving us the Key type. It should be PRI because:
+
+							"If Key is MUL, the column is the first column of a nonunique index in which multiple occurrences of a given value are permitted within the column.
+
+							If more than one of the Key values applies to a given column of a table, Key displays the one with the highest priority, in the order PRI, UNI, MUL."
+
+							https://dev.mysql.com/doc/refman/5.7/en/show-columns.html
+						</aside>
+					</section>
+					<section>
+						<pre class="stretch"><code class="sql" data-trim>
+							MariaDB [dev.dev]> show columns from wp_posts;
+							+-----------------------+---------------------+------+-----+---------------------+----------------+
+							| Field                 | Type                | Null | Key | Default             | Extra          |
+							+-----------------------+---------------------+------+-----+---------------------+----------------+
+							| ID                    | bigint(20) unsigned | NO   | PRI | NULL                | auto_increment |
+							| post_author           | bigint(20) unsigned | NO   | MUL | 0                   |                |
+							| post_date             | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
+							| post_date_gmt         | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
+							| post_content          | longtext            | NO   |     | NULL                |                |
+							| post_title            | text                | NO   |     | NULL                |                |
+							| post_excerpt          | text                | NO   |     | NULL                |                |
+							| post_status           | varchar(20)         | NO   |     | publish             |                |
+							| comment_status        | varchar(20)         | NO   |     | open                |                |
+							| ping_status           | varchar(20)         | NO   |     | open                |                |
+							| post_password         | varchar(255)        | NO   |     |                     |                |
+							| post_name             | varchar(200)        | NO   | MUL |                     |                |
+							| to_ping               | text                | NO   |     | NULL                |                |
+							| pinged                | text                | NO   |     | NULL                |                |
+							| post_modified         | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
+							| post_modified_gmt     | datetime            | NO   |     | 0000-00-00 00:00:00 |                |
+							| post_content_filtered | longtext            | NO   |     | NULL                |                |
+							| post_parent           | bigint(20) unsigned | NO   | MUL | 0                   |                |
+							| guid                  | varchar(255)        | NO   |     |                     |                |
+							| menu_order            | int(11)             | NO   |     | 0                   |                |
+							| post_type             | varchar(20)         | NO   | MUL | post                |                |
+							| post_mime_type        | varchar(100)        | NO   |     |                     |                |
+							| comment_count         | bigint(20)          | NO   |     | 0                   |                |
+							+-----------------------+---------------------+------+-----+---------------------+----------------+
+							23 rows in set (0.00 sec)
+						</code></pre>
+					</section>
 				</section>
 
 				<section data-transition="none slide-out">
