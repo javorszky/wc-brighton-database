@@ -101,8 +101,8 @@
 
 				<section>
 					<h2>How do indexes work?</h2>
-					<p>From <a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">MySQL documentation:</a></p>
-					<blockquote>Indexes are used to find rows with specific column values quickly. Without an index, MySQL must begin with the first row and then read through the entire table to find the relevant rows. The larger the table, the more this costs. If the table has an index for the columns in question, MySQL can quickly determine the position to seek to in the middle of the data file without having to look at all the data. This is much faster than reading every row sequentially.</blockquote>
+					<p>From <a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">MySQL documentation on indexes</a></p>
+					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">Indexes are used to find rows with specific column values quickly. Without an index, MySQL must begin with the first row and then read through the entire table to find the relevant rows. The larger the table, the more this costs. If the table has an index for the columns in question, MySQL can quickly determine the position to seek to in the middle of the data file without having to look at all the data. This is much faster than reading every row sequentially.</blockquote>
 					<aside class="notes">
 						<p>Extra data stored in the same physical file as the InnoDB tables. Indexes are table specific.</p>
 					</aside>
@@ -125,9 +125,42 @@
 				</section>
 
 				<section>
-					<h1>What should be indexed?</h1>
-					<p><a href="">MySQL documentation</a></p>
-					<blockquote>Although it can be tempting to create an indexes for every possible column used in a query, unnecessary indexes waste space and waste time for MySQL to determine which indexes to use. Indexes also add to the cost of inserts, updates, and deletes because each index must be updated. You must find the right balance to achieve fast queries using the optimal set of indexes.</blockquote>
+					<h1>What / how should be indexed?</h1>
+					<p>From <a href="https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html">MySQL documentation on optimization and indexes</a></p>
+					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html">Although it can be tempting to create an indexes for every possible column used in a query, unnecessary indexes waste space and waste time for MySQL to determine which indexes to use. Indexes also add to the cost of inserts, updates, and deletes because each index must be updated. You must find the right balance to achieve fast queries using the optimal set of indexes.</blockquote>
+				</section>
+
+				<section>
+					<h2>Unique / multi index</h2>
+					<p><strong>UNIQUE:</strong> one value can only appear once in a row. Trying to insert same value will result in a database error message. Super fast <br><em>Example: post IDs</em></p>
+					<p><strong>Multi index: </strong>same value can repeat. Still fast, though additional filtering required. <br><em>Example: postmeta_key</em></p>
+				</section>
+
+				<section>
+					<h2>NULL values in indexes</h2>
+					<p>From <a href="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">optimizing InnoDB queries</a></p>
+					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">If an indexed column cannot contain any NULL values, declare it as NOT NULL when you create the table. The optimizer can better determine which index is most effective to use for a query, when it knows whether each column contains NULL values.</blockquote>
+					<p><strong>tldr;</strong> if it shouldn't be NULL, declare it so. It will be faster.</p>
+				</section>
+
+				<section>
+					<h2>Compound indexes</h2>
+					<pre><code class="php" data-trim data-noescape>
+						// given these columns
+						ID, post_name, post_date
+
+						CREATE INDEX (ID, post_name, post_date)
+						// will result in a compound index across ID, post_name, post_date, in that order
+					</code></pre>
+					<p>“If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows.”</p>
+					<pre><code class="php" data-trim>
+						// in this case
+						SELECT * FROM table WHERE ID = x, post_name = y        // uses index (1,2)
+						SELECT * FROM table WHERE ID = x                       // uses index (1)
+						SELECT * FROM table WHERE ID = x, post_date = z        // NOT using index (1,3)
+						SELECT * FROM table WHERE post_name = y, post_date = z // NOT using index (2,3)
+						SELECT * FROM table WHERE post_name = y                // NOT using index (2)
+					</code></pre>
 				</section>
 
 				<section>
@@ -142,12 +175,10 @@
 					Know how the optimizer works!
 
 					Regarding NULLs
-					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">If an indexed column cannot contain any NULL values, declare it as NOT NULL when you create the table. The optimizer can better determine which index is most effective to use for a query, when it knows whether each column contains NULL values <footer><a href="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html</a></footer></blockquote>
-					<aside class="notes">https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html</aside>
+
 
 				</section>
 				<section>
-					If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. For example, if you have a three-column index on (col1, col2, col3), you have indexed search capabilities on (col1), (col1, col2), and (col1, col2, col3). For more information, see Section 8.3.5, “Multiple-Column Indexes”.
 
 
 					<p>https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html</p>
