@@ -61,6 +61,9 @@
 						<li>potentially one with WooCommerce</li>
 						<li>InnoDB storage engine (your WordPress site most probably uses this by default)</li>
 					</ol>
+					<aside class="notes">
+						Older versions of WordPress may run on MyISAM, but that's been deprecated. Main advantage of MyISAM used to be significantly faster read speeds, but with InnoDB catching up, that's no longer the case.
+					</aside>
 				</section>
 
 
@@ -79,6 +82,9 @@
 				<!-- slide 5 -->
 				<section>
 					<blockquote>basically doing anything on the admin area</blockquote>
+					<aside class="notes">
+						Mostly because the admin area needs fresh data, and it works with ALL the data ALL the time
+					</aside>
 				</section>
 
 
@@ -117,6 +123,9 @@
 					<p>Why are they important?</p>
 					<p>How do they work?</p>
 					<p>Indexable, unindexable (looking at you, postmeta value!)</p>
+					<aside class="notes">
+						Indexable: anything that you use to look things up, where values are either unique, or short. meta_value is a LONGTEXT, so feasibly you could only index the first 191 chars of it anyways. Any variation after that gets lost. Plus it would be a lot of extra data in the tablespace slowing down index lookup for the optimizer.
+					</aside>
 				</section>
 
 
@@ -132,6 +141,9 @@
 				<section>
 					<img src="assets/pix/j-zamora-267753.jpg" alt="library">
 					<a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;" href="https://unsplash.com/@jzamora?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from j zamora"><span style="display:inline-block;padding:2px 3px;"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;" viewBox="0 0 32 32"><title></title><path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path></svg></span><span style="display:inline-block;padding:2px 3px;">j zamora</span></a>
+					<aside class="notes">
+						Imagine your data to be the books / contents of those books in a Library. Say you want to find books by Isaac Asimov. You don't have a handy list (ignore the letters on the walls), so you check the first, then the second, etc... it'll take forever.
+					</aside>
 				</section>
 
 
@@ -140,6 +152,9 @@
 				<section>
 					<img src="assets/pix/sanwal-deen-93466.jpg" alt="library index">
 					<a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;" href="https://unsplash.com/@sanwaldeen?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Sanwal Deen"><span style="display:inline-block;padding:2px 3px;"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;" viewBox="0 0 32 32"><title></title><path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path></svg></span><span style="display:inline-block;padding:2px 3px;">Sanwal Deen</span></a>
+					<aside class="notes">
+						Index cards hold relevant information about the books, and are themselves ordered. You can easily find the few cards that relate to books by Isaac Asimov. The cards will tell you where you will find them in the library.
+					</aside>
 				</section>
 
 
@@ -205,7 +220,7 @@
 					<p>"Indexes are less important for queries on small tables, or big tables where report queries process most or all of the rows. When a query needs to access most of the rows, reading sequentially is faster than working through an index. Sequential reads minimize disk seeks, even if not all the rows are needed for the query. See Section 8.2.1.19, “Avoiding Full Table Scans” for details."</p>
 
 					<p><a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">MySQL doc / Indexes</a></p>
-					<p><a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/table-scan-avoidance.html">MySQL doc / Full table scan</a></p>
+					<p><a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/table-scan-avoidance.html">MySQL doc / Avoiding full table scan</a></p>
 				</section>
 
 
@@ -260,7 +275,7 @@
 				<!-- slide 20 -->
 				<section data-transition="slide-in none">
 					<h1>WP DB - posts</h1>
-					<img src="assets/pix/posts.png" alt="">
+					<img src="assets/pix/posts.png" alt="raw posts table structure in sequel pro">
 					<aside class="notes">
 						Raw capture of the entire posts table.
 					</aside>
@@ -271,7 +286,7 @@
 				<!-- slide 21 -->
 				<section data-transition="none">
 					<h1>WP DB - posts</h1>
-					<img src="assets/pix/posts-unsigned.png" alt="">
+					<img src="assets/pix/posts-unsigned.png" alt="posts table structure in sequel pro, BIGINT 20 unsigned fields highlighted">
 					<aside class="notes">
 						Highlighted the unsigned part. Reason post_parent and ID have the same type and length is because post_parent refers to an ID. post_author refers to an ID in the users table, which is also the same type / length. And because IDs cannot be negative, unsigned makes sense.
 					</aside>
@@ -283,15 +298,14 @@
 					<!-- slide 22.1 -->
 					<section>
 						<h1>WP DB - posts</h1>
-						<img src="assets/pix/posts-unique.png" alt="">
+						<img src="assets/pix/posts-unique.png" alt="posts table structure in sequel pro, unique key field highlighted">
 						<aside class="notes">
 							There's a bug in Sequel pro in giving us the Key type. It should be PRI because:
 
-							"If Key is MUL, the column is the first column of a nonunique index in which multiple occurrences of a given value are permitted within the column.
-
-							If more than one of the Key values applies to a given column of a table, Key displays the one with the highest priority, in the order PRI, UNI, MUL."
+							"If Key is MUL, the column is the first column of a nonunique index in which multiple occurrences of a given value are permitted within the column. If more than one of the Key values applies to a given column of a table, Key displays the one with the highest priority, in the order PRI, UNI, MUL."
 
 							https://dev.mysql.com/doc/refman/5.7/en/show-columns.html
+							https://github.com/sequelpro/sequelpro/issues/2856
 						</aside>
 					</section>
 
@@ -336,7 +350,7 @@
 				<!-- slide 23 -->
 				<section data-transition="none slide-out">
 					<h1>WP DB - posts</h1>
-					<img src="assets/pix/posts-compound.png" alt="">
+					<img src="assets/pix/posts-compound.png" alt="posts table structure, compound key highlighted with ordering. It's post type, post status, post date, and ID in this order">
 				</section>
 
 
@@ -353,7 +367,7 @@
 				<!-- slide 25 -->
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
-					<img src="assets/pix/explain-primary.png" alt="">
+					<img src="assets/pix/explain-primary.png" alt="explain query that uses primary key showing mysql using primary key">
 				</section>
 
 
@@ -361,7 +375,7 @@
 				<!-- slide 26 -->
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
-					<img src="assets/pix/explain-compound-single-notfound.png" alt="">
+					<img src="assets/pix/explain-compound-single-notfound.png" alt="explain query using post status in where clause which is the second part of the compound query. Shows that no indexes are used">
 				</section>
 
 
@@ -369,7 +383,7 @@
 				<!-- slide 27 -->
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
-					<img src="assets/pix/explain-compound-multiple-found.png" alt="">
+					<img src="assets/pix/explain-compound-multiple-found.png" alt="explain query using post type and post status in where clause. Shows compound index being used because these two are the leftmost prefix of the compound index">
 				</section>
 
 
@@ -377,7 +391,7 @@
 				<!-- slide 28 -->
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
-					<img src="assets/pix/explain-compound-multiple-range-found.png" alt="">
+					<img src="assets/pix/explain-compound-multiple-range-found.png" alt="explain query using post types and post status in where clause. Shows compound index being used because these two are the leftmost prefix of the compound index even when post type can be a number of different declared values">
 				</section>
 
 
@@ -385,7 +399,7 @@
 				<!-- slide 29 -->
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
-					<img src="assets/pix/explain-compound-multiple-notfound.png" alt="">
+					<img src="assets/pix/explain-compound-multiple-notfound.png" alt="explain query using post status and post date. Shows not using index because it's parts 2 and 3">
 				</section>
 
 
@@ -394,14 +408,21 @@
 					<!-- slide 30.1 -->
 					<section>
 						<h1>WP DB - posts - EXPLAIN</h1>
-						<img src="assets/pix/explain-compound-multiple-found-2.png" alt="">
+						<img src="assets/pix/explain-compound-multiple-found-2.png" alt="explain query using the first three parts of the compound index in the where clause. Shows it's using the compound index.">
+						<aside class="notes">
+							Note that the found rows is 51 here! That means that when using the index, MySQL returned 51 rows that matched the index.
+						</aside>
 					</section>
 
 					<!-- slide 30.2 -->
 					<section>
 						<h1>WP DB - posts - Query</h1>
-						<img src="assets/pix/compound-multiple-found-2.png" alt="">
+						<img src="assets/pix/compound-multiple-found-2.png" alt="same query as the explain in the slide above with the first three parts in where clause. Shows that there are 51 returned rows.">
+						<aside class="notes">
+							Note that the ACTUAL returned rows is also 51 in this case.
+						</aside>
 					</section>
+
 				</section>
 
 
@@ -409,7 +430,10 @@
 				<!-- slide 31 -->
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
-					<img src="assets/pix/explain-compound-multiple-id-exact-found.png" alt="">
+					<img src="assets/pix/explain-compound-multiple-id-exact-found.png" alt="explain query using all parts of the compound index, including the ID. Since the ID is also a primary index, this shows that the query is using the primary index. Because it's an equivalence, there's only 1 row returned.">
+					<aside class="notes">
+						Using all parts of the compound index, including the primary query. Because using the primary query would yield less results over using the compound index, that's the one being used. Because it's an equivalence, there is only one row returned.
+					</aside>
 				</section>
 
 
@@ -418,13 +442,19 @@
 					<!-- slide 32.1 -->
 					<section>
 						<h1>WP DB - posts - EXPLAIN</h1>
-						<img src="assets/pix/explain-compound-multiple-id-range-found.png" alt="">
+						<img src="assets/pix/explain-compound-multiple-id-range-found.png" alt="explain query using all parts of the compound query with the ID being a range comparison (less than). Because ID is also a primary key, it shows that the primary key is used for the query, and will return 69 results.">
+						<aside class="notes">
+							Here we're using ID as a range comparison. ID is also a primary key, so that's the one being used because it's faster. It shows that there would be 69 rows returned.
+						</aside>
 					</section>
 
 					<!-- slide 32.2 -->
 					<section>
 						<h1>WP DB - posts - Query</h1>
-						<img src="assets/pix/compound-multiple-id-range-found-14-69.png" alt="">
+						<img src="assets/pix/compound-multiple-id-range-found-14-69.png" alt="query run using all 4 parts of the compound query, including ID being a range comparison. Here there are only 14 rows, even though the explain said there are 69">
+						<aside class="notes">
+							However when we run the ACTUAL query, there are only 14 rows given. That's becuase first MySQL evaluates the ID < 88 query, and only then evaluates the rest of the where clauses on the results returned by the ID < 88 query.
+						</aside>
 					</section>
 
 				</section>
@@ -621,6 +651,9 @@
 						<li>MySQL Workbench / Seqel Pro / mysql cli for the EXPLAIN queries. Please don't use phpmyadmin for this even though it COULD.</li>
 						<li>Blackfire.io</li>
 					</ul>
+					<aside class="notes">
+						New Relic and Blackfire are both premium services. Sequel Pro is open source.
+					</aside>
 				</section>
 
 
