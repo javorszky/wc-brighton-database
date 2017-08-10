@@ -218,21 +218,20 @@
 
 				<section>
 					<h2>Compound indexes</h2>
-					<pre><code class="php" data-trim data-noescape>
-						// given these columns
-						ID, post_name, post_date
+					<pre><code class="sql" data-trim data-noescape>
+						-- given these columns
+						-- ID, post_name, post_date
 
-						CREATE INDEX (ID, post_name, post_date)
-						// will result in a compound index across ID, post_name, post_date, in that order
+						CREATE INDEX (`ID`, `post_name`, `post_date`)
+						-- will result in a compound index across ID, post_name, post_date, in that order
 					</code></pre>
 					<p>“If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows.”</p>
-					<pre><code class="php" data-trim>
-						// in this case
-						SELECT * FROM table WHERE ID = x, post_name = y        // uses index (1,2)
-						SELECT * FROM table WHERE ID = x                       // uses index (1)
-						SELECT * FROM table WHERE ID = x, post_date = z        // NOT using index (1,3)
-						SELECT * FROM table WHERE post_name = y, post_date = z // NOT using index (2,3)
-						SELECT * FROM table WHERE post_name = y                // NOT using index (2)
+					<pre><code class="sql" data-trim>
+						SELECT * FROM table WHERE `ID` = x, `post_name` = y        -- uses index (1,2)
+						SELECT * FROM table WHERE `ID` = x                         -- uses index (1)
+						SELECT * FROM table WHERE `ID` = x, `post_date` = z        -- NOT using index (1,3)
+						SELECT * FROM table WHERE `post_name` = y, `post_date` = z -- NOT using index (2,3)
+						SELECT * FROM table WHERE `post_name` = y                  -- NOT using index (2)
 					</code></pre>
 				</section>
 
