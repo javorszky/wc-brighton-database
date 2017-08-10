@@ -418,47 +418,79 @@
 
 
 				<section>
-					<h1>ORDERBY</h1>
-					<p>Think carefully what to use for order by. The full list is on <a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html">MySQL docs on ORDERBY optimization</a>.</p>
+					<h1>ORDER BY</h1>
+					<p>Think carefully what to use for order by. The full list is on <a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html">MySQL docs on ORDER BY optimization</a>.</p>
 					<p>Tips:</p>
 					<ul>
 						<li>The larger the data to order, the slower it'll be.</li>
-						<li>Indexes can be used to orderby if "if the ORDER BY does not match the index exactly, as long as all unused portions of the index and all extra ORDER BY columns are constants in the WHERE clause."</li>
+						<li>Indexes can be used to order by if "if the ORDER BY does not match the index exactly, as long as all unused portions of the index and all extra ORDER BY columns are constants in the WHERE clause."</li>
 					</ul>
+					<p><a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html">MySQL doc / ORDER BY optimization</a></p>
+
+				</section>
+
+				<section>
+					<h1>ORDER BY</h1>
+					<p>These <strong>will</strong> use index:</p>
+					<pre class="stretch"><code class="sql" data-trim>
+						-- same compound key, consecutive, no WHERE clause
+						SELECT * FROM t1
+						  ORDER BY key_part1, key_part2;
+
+						-- key_part1 in WHERE with constant (not column), key_part2 in order by
+						SELECT * FROM t1
+						  WHERE key_part1 = constant
+						  ORDER BY key_part2;
+
+						-- key_part1 is compared to constant, same key used in order by
+						SELECT * FROM t1
+						  WHERE key_part1 > constant
+						  ORDER BY key_part1 ASC;
+
+						-- key parts compared to constants, order by uses same key part
+						SELECT * FROM t1
+						  WHERE key_part1 = constant1 AND key_part2 > constant2
+						  ORDER BY key_part2;
+					</code></pre>
+
+					<p><a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html">MySQL doc / ORDER BY optimization</a></p>
 				</section>
 
 
+
 				<section>
-					<h1>ORDERBY</h1>
+					<h1>ORDER BY</h1>
 					<p>These <strong>will not</strong> use index though:</p>
 					<pre><code class="sql" data-trim>
 						-- Query uses two different indexes
 						SELECT * FROM t1 ORDER BY key1, key2;
-					</code></pre>
 
-
-					<pre><code class="sql" data-trim>
-						-- non-consecutive compound index parts in orderby
+						-- non-consecutive compound index parts in order by
 						SELECT * FROM t1 WHERE key2=constant ORDER BY key_part1, key_part3;
-					</code></pre>
 
-					<pre><code class="sql" data-trim>
 						-- mixes ASC and DESC
 						SELECT * FROM t1 ORDER BY key_part1 DESC, key_part2 ASC;
-					</code></pre>
 
-					<pre><code class="sql" data-trim>
-						-- key in WHERE and key in ORDERBY are different
+						-- key in WHERE and key in ORDER BY are different
 						SELECT * FROM t1 WHERE key2=constant ORDER BY key1;
-					</code></pre>
 
-					<pre><code class="sql" data-trim>
-						-- orderby is an expression other than the index (needs calculation)
+						-- order by is an expression other than the index (needs calculation)
 						SELECT * FROM t1 ORDER BY ABS(key);
 						SELECT * FROM t1 ORDER BY -key;
 					</code></pre>
+					<p><a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html">MySQL doc / ORDER BY optimization</a></p>
 				</section>
 
+				<section>
+					<h1>GROUP BY</h1>
+					<p>Either creates a temporary table, or uses indexes in VERY SPECIFIC cases.</p>
+					<p>Douglas Adam's words apply to Group By too:</p>
+					<blockquote>
+						The Encyclopedia Galactica, in its chapter on Love states that it is far too complicated to define. The Hitchhiker's Guide to the Galaxy has this to say on the subject of love: Avoid, if at all possible. Unfortunately, Arthur Dent has never read the Hitchhiker's Guide to the Galaxy.
+					</blockquote>
+					<p><a href="https://dev.mysql.com/doc/refman/5.7/en/group-by-optimization.html">MySQL doc / GROUP BY optimization</a></p>
+
+				</section>
 
 
 
