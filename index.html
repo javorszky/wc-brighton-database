@@ -24,6 +24,9 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
+
+
+
 				<section>
 					<h1>Things you didn't know you need to know about WordPress and databases</h2>
 
@@ -32,6 +35,11 @@
 						<p><small>(full disclosure: I'm not a certified DB architect)</small></p>
 					</aside>
 				</section>
+
+
+
+
+
 
 				<section>
 					<h1>Assumptions</h1>
@@ -48,6 +56,9 @@
 					</ol>
 				</section>
 
+
+
+
 				<section>
 					<h2>common (slow) queries</h2>
 					<blockquote>get me all the orders for user 4</blockquote>
@@ -56,15 +67,24 @@
 					<blockquote>get me the sum of all order totals where the order date is in May and order by order total. or date</blockquote>
 				</section>
 
+
+
+
 				<section>
 					<blockquote>basically doing anything on the admin area</blockquote>
 				</section>
+
+
+
 
 				<section>
 					<p>All of those are going to be</p>
 					<p class="fragment">...really...</p>
 					<p class="fragment">...slow.</p>
 				</section>
+
+
+
 
 				<section>
 					<h1>The Talk</h1>
@@ -79,7 +99,9 @@
 					</aside>
 				</section>
 
-				<!-- indexes part -->
+
+
+
 				<section>
 					<h1>Indexes</h1>
 					<p>What are they?</p>
@@ -88,19 +110,31 @@
 					<p>Indexable, unindexable (looking at you, postmeta value!)</p>
 				</section>
 
+
+
+
 				<section>
 					<h1>What are indexes</h1>
 				</section>
+
+
+
 
 				<section>
 					<img src="assets/pix/j-zamora-267753.jpg" alt="library">
 					<a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;" href="https://unsplash.com/@jzamora?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from j zamora"><span style="display:inline-block;padding:2px 3px;"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;" viewBox="0 0 32 32"><title></title><path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path></svg></span><span style="display:inline-block;padding:2px 3px;">j zamora</span></a>
 				</section>
 
+
+
+
 				<section>
 					<img src="assets/pix/sanwal-deen-93466.jpg" alt="library index">
 					<a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px;" href="https://unsplash.com/@sanwaldeen?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Sanwal Deen"><span style="display:inline-block;padding:2px 3px;"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;" viewBox="0 0 32 32"><title></title><path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path></svg></span><span style="display:inline-block;padding:2px 3px;">Sanwal Deen</span></a>
 				</section>
+
+
+
 
 				<section>
 					<h2>How do indexes work?</h2>
@@ -111,11 +145,17 @@
 					</aside>
 				</section>
 
+
+
+
 				<section>
 					<h2>Why are they important?</h2>
 					<p>In short: well designed indexes will get you the data in a fast, efficient manner.</p>
 					<p>You can do more on the same hardware => cheaper hosting => faster site => happier customers => more income / profit</p>
 				</section>
+
+
+
 
 				<section>
 					<h2>Columns, data types</h2>
@@ -139,17 +179,26 @@
 					</div>
 				</section>
 
+
+
+
 				<section>
 					<h1>What / how should be indexed?</h1>
 					<p>From <a href="https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html">MySQL documentation on optimization and indexes</a></p>
 					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html">Although it can be tempting to create an indexes for every possible column used in a query, unnecessary indexes waste space and waste time for MySQL to determine which indexes to use. Indexes also add to the cost of inserts, updates, and deletes because each index must be updated. You must find the right balance to achieve fast queries using the optimal set of indexes.</blockquote>
 				</section>
 
+
+
+
 				<section>
 					<h2>Unique / multi index</h2>
 					<p><strong>UNIQUE:</strong> one value can only appear once in a row. Trying to insert same value will result in a database error message. Super fast <br><em>Example: post IDs</em></p>
 					<p><strong>Multi index: </strong>same value can repeat. Still fast, though additional filtering required. <br><em>Example: postmeta_key</em></p>
 				</section>
+
+
+
 
 				<section>
 					<h2>NULL values in indexes</h2>
@@ -163,6 +212,9 @@
 						<p>UNIQUE KEY:<br><br>A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. For all engines, a UNIQUE index permits multiple NULL values for columns that can contain NULL.</p>
 					</aside>
 				</section>
+
+
+
 
 				<section>
 					<h2>Compound indexes</h2>
@@ -184,6 +236,9 @@
 					</code></pre>
 				</section>
 
+
+
+
 				<section data-transition="slide-in none">
 					<h1>WP DB - posts</h1>
 					<img src="assets/pix/posts.png" alt="">
@@ -192,6 +247,9 @@
 					</aside>
 				</section>
 
+
+
+
 				<section data-transition="none">
 					<h1>WP DB - posts</h1>
 					<img src="assets/pix/posts-unsigned.png" alt="">
@@ -199,6 +257,9 @@
 						Highlighted the unsigned part. Reason post_parent and ID have the same type and length is because post_parent refers to an ID. post_author refers to an ID in the users table, which is also the same type / length. And because IDs cannot be negative, unsigned makes sense.
 					</aside>
 				</section>
+
+
+
 
 				<section data-transition="none">
 					<section>
@@ -214,6 +275,7 @@
 							https://dev.mysql.com/doc/refman/5.7/en/show-columns.html
 						</aside>
 					</section>
+
 					<section>
 						<pre class="stretch"><code class="sql" data-trim>
 							MariaDB [dev.dev]> show columns from wp_posts;
@@ -249,35 +311,56 @@
 					</section>
 				</section>
 
+
+
+
 				<section data-transition="none slide-out">
 					<h1>WP DB - posts</h1>
 					<img src="assets/pix/posts-compound.png" alt="">
 				</section>
+
+
+
 
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
 					<img src="assets/pix/explain-primary.png" alt="">
 				</section>
 
+
+
+
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
 					<img src="assets/pix/explain-compound-single-notfound.png" alt="">
 				</section>
+
+
+
 
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
 					<img src="assets/pix/explain-compound-multiple-found.png" alt="">
 				</section>
 
+
+
+
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
 					<img src="assets/pix/explain-compound-multiple-range-found.png" alt="">
 				</section>
 
+
+
+
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
 					<img src="assets/pix/explain-compound-multiple-notfound.png" alt="">
 				</section>
+
+
+
 
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
@@ -285,16 +368,23 @@
 					<img src="assets/pix/compound-multiple-found-2.png" alt="">
 				</section>
 
+
+
+
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
 					<img src="assets/pix/explain-compound-multiple-id-exact-found.png" alt="">
 				</section>
+
+
+
 
 				<section>
 					<h1>WP DB - posts - EXPLAIN</h1>
 					<img src="assets/pix/explain-compound-multiple-id-range-found.png" alt="">
 					<img src="assets/pix/compound-multiple-id-range-found-14-69.png" alt="">
 				</section>
+
 
 
 
@@ -305,14 +395,18 @@
 					Know how the optimizer works!
 
 					Regarding NULLs
-
-
 				</section>
+
+
+
+
 				<section>
-
-
 					<p>https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html</p>
 				</section>
+
+
+
+
 				<section>
 					<p>To retrieve rows from other tables when performing joins. MySQL can use indexes on columns more efficiently if they are declared as the same type and size. In this context, VARCHAR and CHAR are considered the same if they are declared as the same size. For example, VARCHAR(10) and CHAR(10) are the same size, but VARCHAR(10) and CHAR(15) are not.
 
@@ -325,30 +419,43 @@
 					<p>MySQL can use multiple-column indexes for queries that test all the columns in the index, or queries that test just the first column, the first two columns, the first three columns, and so on. If you specify the columns in the right order in the index definition, a single composite index can speed up several kinds of queries on the same table.</p>
 				</section>
 
+
+
+
 				<section>
 					<p>Indexes are less important for queries on small tables, or big tables where report queries process most or all of the rows. When a query needs to access most of the rows, reading sequentially is faster than working through an index. Sequential reads minimize disk seeks, even if not all the rows are needed for the query. See Section 8.2.1.19, “Avoiding Full Table Scans” for details.</p>
 				</section>
+
+
+
 
 				<section>
 					<p>If the table has a multiple-column index, any leftmost prefix of the index can be used by the optimizer to look up rows. For example, if you have a three-column index on (col1, col2, col3), you have indexed search capabilities on (col1), (col1, col2), and (col1, col2, col3).</p>
 				</section>
 
-				<!-- Multiple tables part -->
+
+
+
 				<section>
 					<p>When to use existing / built in functionality to store data and when to create new tables.</p>
 				</section>
+
+
+
 
 				<section>
 					<p>additionally when you create new tables, what should they look like?</p>
 					<p>very much depends on your use case and how you're going to interact with the data</p>
 				</section>
 
+
+
+
 				<section>
 					<h1>Further reading</h1>
 					<p>On cardinality: https://logicalread.com/mysql-index-cardinality-mc12/</p>
 
 				</section>
-
 			</div>
 		</div>
 
