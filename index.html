@@ -402,19 +402,62 @@
 
 
 				<section>
-					<p>select statements indexing vs order by / group by optimization</p>
-					How to make queries fast?
-
-					Know how the optimizer works!
-
-					Regarding NULLs
+					<h1>Using WP_Query</h1>
+					<p>By the way the previous is why WP Query forces you to declare a post_type, otherwise defaults to post.</p>
+					<pre><code class="php" data-trim>
+						// in class-wp-query.php line 2281 in version 4.8.1
+						// method get_posts()
+						} else {
+							$where .= " AND {$wpdb->posts}.post_type = 'post'";
+							$post_type_object = get_post_type_object ( 'post' );
+						}
+					</code></pre>
+					<p>If there was no post_type declaration, lots of queries would skip using the index.</p>
 				</section>
 
 
 
 
 				<section>
-					<p>https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html</p>
+					<h1>ORDERBY</h1>
+					<p>Think carefully what to use for order by. The full list is on <a href="https://dev.mysql.com/doc/refman/5.7/en/order-by-optimization.html">MySQL docs on ORDERBY optimization</a>.</p>
+					<p>Tips:</p>
+					<ul>
+						<li>The larger the data to order, the slower it'll be.</li>
+						<li>Indexes can be used to orderby if "if the ORDER BY does not match the index exactly, as long as all unused portions of the index and all extra ORDER BY columns are constants in the WHERE clause."</li>
+					</ul>
+				</section>
+
+
+				<section>
+					<h1>ORDERBY</h1>
+					<p>These <strong>will not</strong> use index though:</p>
+					<pre><code class="sql" data-trim>
+						-- Query uses two different indexes
+						SELECT * FROM t1 ORDER BY key1, key2;
+					</code></pre>
+
+
+					<pre><code class="sql" data-trim>
+						-- non-consecutive compound index parts in orderby
+						SELECT * FROM t1 WHERE key2=constant ORDER BY key_part1, key_part3;
+					</code></pre>
+
+					<pre><code class="sql" data-trim>
+						-- mixes ASC and DESC
+						SELECT * FROM t1 ORDER BY key_part1 DESC, key_part2 ASC;
+					</code></pre>
+
+					<pre><code class="sql" data-trim>
+						-- key in WHERE and key in ORDERBY are different
+						SELECT * FROM t1 WHERE key2=constant ORDER BY key1;
+					</code></pre>
+
+					<pre><code class="sql" data-trim>
+						-- orderby is an expression other than the index (needs calculation)
+						SELECT * FROM t1 ORDER BY ABS(key);
+						SELECT * FROM t1 ORDER BY -key;
+					</code></pre>
 				</section>
 
 
