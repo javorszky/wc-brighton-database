@@ -525,10 +525,13 @@
 				<!-- slide 35 -->
 				<section>
 					<h1>JOINs</h1>
-					<p>most efficient if indexes on colums are declared same type and size. Which is why all ID fields are BIGINT(20) in WP.</p>
-					<p>VARCHAR and CHAR are considered the same if their sizes match. VARCHAR(10) == CHAR(10).</p>
-					<p>Use same charset (this is usually taken care of for you)</p>
-					<p>Do not use columns that need type juggling though. eg numeric 1 and string '1', '00001', ' 1', '01.e1', etc</p>
+					<ul>
+						<li>t1.TYPE(LENGTH) == t2.TYPE(LENGTH).</li>
+						<li>ID fields are BIGINT(20).</li>
+						<li>VARCHAR(10) == CHAR(10).</li>
+						<li>Same charset</li>
+						<li>Don't: numeric 1 and string '1', '00001', ' 1', '01.e1', etc</li>
+					</ul>
 					<p><a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">MySQL doc on indexes</a></p>
 				</section>
 
