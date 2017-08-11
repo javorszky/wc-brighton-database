@@ -58,8 +58,8 @@
 					<h1>Assumptions</h1>
 					<ol>
 						<li>Site is large with lots of data</li>
-						<li>potentially one with WooCommerce</li>
-						<li>InnoDB storage engine (your WordPress site most probably uses this by default)</li>
+						<li>with WooCommerce</li>
+						<li>You are a developer / have seen the WP database before</li>
 					</ol>
 					<aside class="notes">
 						Older versions of WordPress may run on MyISAM, but that's been deprecated. Main advantage of MyISAM used to be significantly faster read speeds, but with InnoDB catching up, that's no longer the case.
@@ -94,6 +94,7 @@
 					<p>All of those are going to be</p>
 					<p class="fragment">...really...</p>
 					<p class="fragment">...slow.</p>
+					<img class="plain" src="assets/pix/flash.gif" alt="">
 				</section>
 
 
@@ -102,11 +103,9 @@
 				<section>
 					<h1>The Talk</h1>
 					<ul>
-						<li>indexes and how to use them</li>
-						<li>storing data in multiple tables vs one table - foreign keys and why they're awesome</li>
-						<li>tools to measure stuff</li>
-						<li>won't touch caching</li>
-						<li>won't touch ElasticSearch / Solr</li>
+						<li>Part I: indexes and how to use them (SELECT / ORDER BY / GROUP BY index usage)</li>
+						<li>Part II: storing data in multiple tables vs one table - foreign keys and why they're awesome</li>
+						<li>Part III: tools to measure stuff</li>
 					</ul>
 					<aside class="notes">
 						<p>Can I help existing sites? - probably not</p>
@@ -118,11 +117,10 @@
 
 				<!-- slide 8 -->
 				<section>
-					<h1>Indexes</h1>
+					<h1>Part I: Indexes</h1>
 					<p>What are they?</p>
 					<p>Why are they important?</p>
-					<p>How do they work?</p>
-					<p>Indexable, unindexable (looking at you, postmeta value!)</p>
+					<p>How do they work? 🌈🌈</p>
 					<aside class="notes">
 						Indexable: anything that you use to look things up, where values are either unique, or short. meta_value is a LONGTEXT, so feasibly you could only index the first 191 chars of it anyways. Any variation after that gets lost. Plus it would be a lot of extra data in the tablespace slowing down index lookup for the optimizer.
 					</aside>
@@ -160,7 +158,7 @@
 
 
 				<!-- slide 12 -->
-				<section>
+				<!-- <section>
 					<h2>How do indexes work?</h2>
 					<p>From <a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">MySQL documentation on indexes</a></p>
 					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">Indexes are used to find rows with specific column values quickly. Without an index, MySQL must begin with the first row and then read through the entire table to find the relevant rows. The larger the table, the more this costs. If the table has an index for the columns in question, MySQL can quickly determine the position to seek to in the middle of the data file without having to look at all the data. This is much faster than reading every row sequentially.</blockquote>
@@ -168,68 +166,47 @@
 						<p>Extra data stored in the same physical file as the InnoDB tables. Indexes are table specific.</p>
 					</aside>
 				</section>
-
+ -->
 
 
 				<!-- slide 13 -->
 				<section>
 					<h2>Why are they important?</h2>
-					<p>In short: well designed indexes will get you the data in a fast, efficient manner.</p>
-					<p>You can do more on the same hardware => cheaper hosting => faster site => happier customers => more income / profit</p>
+					<p>👌 designed indexes ➡<br>
+						  fast, efficient data access ➡<br>
+						  💯 site ➡<br>
+						  😍 customers ➡<br>
+						💰💵</p>
 				</section>
 
-
-
-				<!-- slide 14 -->
-				<section>
-					<h2>Columns, data types</h2>
-					<ul>
-						<li>numeric: INTEGER, BIGINT, SIGNED / UNSIGNED</li>
-						<li>string: TEXT, VARCHAR, LONGTEXT</li>
-						<li>date type: DATE, TIMESTAMP, DATETIME</li>
-						<li>specifying character lengths: VARCHAR(191), BIGINT(20)</li>
-					</ul>
-					<div class="fragment">
-						<p>Examples of signed / unsigned. "Can it have a negative sign?". Highest binary place is the sign</p>
-						<pre><code class="php" data-trim>
-							// signed -127 – +127
-							011111111 = +127
-							111111111 = -127
-
-							// unsigned 0 – 255
-							011111111 = 127
-							111111111 = 255
-						</code></pre>
-					</div>
-				</section>
 
 
 
 				<!-- slide 15 -->
-				<section>
-					<h1>What / how should be indexed?</h1>
+				<!-- <section>
+					<h1>What / how?</h1>
 					<p>From <a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html">MySQL documentation on optimization and indexes</a></p>
 					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimization-indexes.html">Although it can be tempting to create an indexes for every possible column used in a query, unnecessary indexes waste space and waste time for MySQL to determine which indexes to use. Indexes also add to the cost of inserts, updates, and deletes because each index must be updated. You must find the right balance to achieve fast queries using the optimal set of indexes.</blockquote>
-				</section>
+				</section> -->
 
 
 
 				<!-- slide 16 -->
-				<section>
+				<!-- <section>
 					<h1>What / how should be indexed?</h1>
 					<p>"Indexes are less important for queries on small tables, or big tables where report queries process most or all of the rows. When a query needs to access most of the rows, reading sequentially is faster than working through an index. Sequential reads minimize disk seeks, even if not all the rows are needed for the query. See Section 8.2.1.19, “Avoiding Full Table Scans” for details."</p>
 
 					<p><a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/mysql-indexes.html">MySQL doc / Indexes</a></p>
 					<p><a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/table-scan-avoidance.html">MySQL doc / Avoiding full table scan</a></p>
-				</section>
+				</section> -->
 
 
 
 				<!-- slide 17 -->
 				<section>
 					<h2>Unique / multi index</h2>
-					<p><strong>UNIQUE:</strong> one value can only appear once in a row. Trying to insert same value will result in a database error message. Super fast <br><em>Example: post IDs</em></p>
-					<p><strong>Multi index: </strong>same value can repeat. Still fast, though additional filtering required. <br><em>Example: postmeta_key</em></p>
+					<p><strong>UNIQUE:</strong> one value can only appear once in a column. Super fast <br><em>Example: post IDs</em></p>
+					<p><strong>MULTI: </strong>same value can repeat. Still fast, though additional filtering required. <br><em>Example: postmeta_key</em></p>
 				</section>
 
 
@@ -237,12 +214,18 @@
 				<!-- slide 18 -->
 				<section>
 					<h2>NULL values in indexes</h2>
-					<p>From <a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">optimizing InnoDB queries</a></p>
-					<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">If an indexed column cannot contain any NULL values, declare it as NOT NULL when you create the table. The optimizer can better determine which index is most effective to use for a query, when it knows whether each column contains NULL values.</blockquote>
-					<p><strong>tldr;</strong> if it shouldn't be NULL, declare it so. It will be faster.</p>
+					<p><strong>tldr;</strong> if data in column shouldn't ever be NULL, declare it so. Data lookup will be faster.</p>
+					<pre><code class="sql" data-trim>
+						CREATE TABLE `wp_posts` (
+							`ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+							...
+						)
+					</code></pre>
 					<p><strong>protip: </strong>primary keys will always be NOT NULL!</p>
 					<p><strong>protip2: </strong>unique keys permit multiple NULL values!</p>
+					<p>See <a target="_blank" href="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">optimizing InnoDB queries</a></p>
 					<aside class="notes">
+						<blockquote cite="https://dev.mysql.com/doc/refman/5.7/en/optimizing-innodb-queries.html">If an indexed column cannot contain any NULL values, declare it as NOT NULL when you create the table. The optimizer can better determine which index is most effective to use for a query, when it knows whether each column contains NULL values.</blockquote>
 						<p>PRIMARY KEY: <br><br>A unique index where all key columns must be defined as NOT NULL. If they are not explicitly declared as NOT NULL, MySQL declares them so implicitly (and silently). A table can have only one PRIMARY KEY. The name of a PRIMARY KEY is always PRIMARY, which thus cannot be used as the name for any other kind of index.</p>
 						<p>UNIQUE KEY:<br><br>A UNIQUE index creates a constraint such that all values in the index must be distinct. An error occurs if you try to add a new row with a key value that matches an existing row. For all engines, a UNIQUE index permits multiple NULL values for columns that can contain NULL.</p>
 					</aside>
@@ -272,9 +255,34 @@
 
 
 
+				<!-- slide 14 -->
+				<section>
+					<h2>Columns, data types</h2>
+					<ul>
+						<li>numeric: INTEGER, BIGINT, SIGNED / UNSIGNED</li>
+						<li>string: TEXT, VARCHAR, LONGTEXT</li>
+						<li>date type: DATE, TIMESTAMP, DATETIME</li>
+						<li>specifying character lengths: VARCHAR(191), BIGINT(20)</li>
+					</ul>
+					<div class="fragment">
+						<p>Examples of signed / unsigned. "Can it have a negative sign?". Highest binary place is the sign</p>
+						<pre><code class="php" data-trim>
+							// signed -127 – +127
+							011111111 = +127
+							111111111 = -128
+
+							// unsigned 0 – 255
+							011111111 = 127
+							111111111 = 255
+						</code></pre>
+					</div>
+				</section>
+
+
+
 				<!-- slide 20 -->
 				<section data-transition="slide-in none">
-					<h1>WP DB - posts</h1>
+
 					<img src="assets/pix/posts.png" alt="raw posts table structure in sequel pro">
 					<aside class="notes">
 						Raw capture of the entire posts table.
@@ -285,7 +293,7 @@
 
 				<!-- slide 21 -->
 				<section data-transition="none">
-					<h1>WP DB - posts</h1>
+
 					<img src="assets/pix/posts-unsigned.png" alt="posts table structure in sequel pro, BIGINT 20 unsigned fields highlighted">
 					<aside class="notes">
 						Highlighted the unsigned part. Reason post_parent and ID have the same type and length is because post_parent refers to an ID. post_author refers to an ID in the users table, which is also the same type / length. And because IDs cannot be negative, unsigned makes sense.
@@ -297,7 +305,7 @@
 				<section data-transition="none">
 					<!-- slide 22.1 -->
 					<section>
-						<h1>WP DB - posts</h1>
+
 						<img src="assets/pix/posts-unique.png" alt="posts table structure in sequel pro, unique key field highlighted">
 						<aside class="notes">
 							There's a bug in Sequel pro in giving us the Key type. It should be PRI because:
@@ -349,7 +357,7 @@
 
 				<!-- slide 23 -->
 				<section data-transition="none slide-out">
-					<h1>WP DB - posts</h1>
+
 					<img src="assets/pix/posts-compound.png" alt="posts table structure, compound key highlighted with ordering. It's post type, post status, post date, and ID in this order">
 				</section>
 
@@ -357,7 +365,7 @@
 
 				<!-- slide 24 -->
 				<section>
-					<h1>WP DB - postmeta</h1>
+
 					<img src="assets/pix/postmeta-highlight.png" alt="postmeta table structure">
 					<p>Why 191? - InnoDB key prefix limit is 767 bytes. WP tables use utf8mb4 charset, that's 4 bytes per character. 767 / 4 = 191.75, flooring that is 191. <strong>Only 191 characters fit into the key prefix.</strong></p>
 				</section>
@@ -366,7 +374,7 @@
 
 				<!-- slide 25 -->
 				<section>
-					<h1>WP DB - posts - EXPLAIN</h1>
+					<h1>WP DB - posts - EXPLAIN SELECT</h1>
 					<img src="assets/pix/explain-primary.png" alt="explain query that uses primary key showing mysql using primary key">
 				</section>
 
@@ -374,7 +382,7 @@
 
 				<!-- slide 26 -->
 				<section>
-					<h1>WP DB - posts - EXPLAIN</h1>
+
 					<img src="assets/pix/explain-compound-single-notfound.png" alt="explain query using post status in where clause which is the second part of the compound query. Shows that no indexes are used">
 				</section>
 
@@ -382,7 +390,7 @@
 
 				<!-- slide 27 -->
 				<section>
-					<h1>WP DB - posts - EXPLAIN</h1>
+
 					<img src="assets/pix/explain-compound-multiple-found.png" alt="explain query using post type and post status in where clause. Shows compound index being used because these two are the leftmost prefix of the compound index">
 				</section>
 
@@ -390,7 +398,7 @@
 
 				<!-- slide 28 -->
 				<section>
-					<h1>WP DB - posts - EXPLAIN</h1>
+
 					<img src="assets/pix/explain-compound-multiple-range-found.png" alt="explain query using post types and post status in where clause. Shows compound index being used because these two are the leftmost prefix of the compound index even when post type can be a number of different declared values">
 				</section>
 
@@ -398,7 +406,7 @@
 
 				<!-- slide 29 -->
 				<section>
-					<h1>WP DB - posts - EXPLAIN</h1>
+
 					<img src="assets/pix/explain-compound-multiple-notfound.png" alt="explain query using post status and post date. Shows not using index because it's parts 2 and 3">
 				</section>
 
@@ -407,7 +415,7 @@
 				<section>
 					<!-- slide 30.1 -->
 					<section>
-						<h1>WP DB - posts - EXPLAIN</h1>
+
 						<img src="assets/pix/explain-compound-multiple-found-2.png" alt="explain query using the first three parts of the compound index in the where clause. Shows it's using the compound index.">
 						<aside class="notes">
 							Note that the found rows is 51 here! That means that when using the index, MySQL returned 51 rows that matched the index.
@@ -416,7 +424,6 @@
 
 					<!-- slide 30.2 -->
 					<section>
-						<h1>WP DB - posts - Query</h1>
 						<img src="assets/pix/compound-multiple-found-2.png" alt="same query as the explain in the slide above with the first three parts in where clause. Shows that there are 51 returned rows.">
 						<aside class="notes">
 							Note that the ACTUAL returned rows is also 51 in this case.
@@ -429,7 +436,7 @@
 
 				<!-- slide 31 -->
 				<section>
-					<h1>WP DB - posts - EXPLAIN</h1>
+
 					<img src="assets/pix/explain-compound-multiple-id-exact-found.png" alt="explain query using all parts of the compound index, including the ID. Since the ID is also a primary index, this shows that the query is using the primary index. Because it's an equivalence, there's only 1 row returned.">
 					<aside class="notes">
 						Using all parts of the compound index, including the primary query. Because using the primary query would yield less results over using the compound index, that's the one being used. Because it's an equivalence, there is only one row returned.
@@ -441,7 +448,7 @@
 				<section>
 					<!-- slide 32.1 -->
 					<section>
-						<h1>WP DB - posts - EXPLAIN</h1>
+
 						<img src="assets/pix/explain-compound-multiple-id-range-found.png" alt="explain query using all parts of the compound query with the ID being a range comparison (less than). Because ID is also a primary key, it shows that the primary key is used for the query, and will return 69 results.">
 						<aside class="notes">
 							Here we're using ID as a range comparison. ID is also a primary key, so that's the one being used because it's faster. It shows that there would be 69 rows returned.
@@ -450,7 +457,7 @@
 
 					<!-- slide 32.2 -->
 					<section>
-						<h1>WP DB - posts - Query</h1>
+
 						<img src="assets/pix/compound-multiple-id-range-found-14-69.png" alt="query run using all 4 parts of the compound query, including ID being a range comparison. Here there are only 14 rows, even though the explain said there are 69">
 						<aside class="notes">
 							However when we run the ACTUAL query, there are only 14 rows given. That's becuase first MySQL evaluates the ID < 88 query, and only then evaluates the rest of the where clauses on the results returned by the ID < 88 query.
@@ -464,6 +471,7 @@
 				<!-- slide 33 -->
 				<section>
 					<h1>Using WP_Query</h1>
+
 					<p>By the way the previous is why WP Query forces you to declare a post_type, otherwise defaults to post.</p>
 					<pre><code class="php" data-trim>
 						// in class-wp-query.php line 2281 in version 4.8.1
