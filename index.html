@@ -348,6 +348,7 @@
 
 				<!-- slide 23 -->
 				<section>
+					<p>(post_type, <mark>post_status</mark>, post_date, ID)</p>
 					<img class="plain" src="assets/pix/explain-compound-single-notfound.png" alt="explain query using post status in where clause which is the second part of the compound query. Shows that no indexes are used">
 				</section>
 
@@ -355,6 +356,7 @@
 
 				<!-- slide 24 -->
 				<section>
+					<p>(<mark>post_type, post_status</mark>, post_date, ID)</p>
 					<img class="plain" src="assets/pix/explain-compound-multiple-found.png" alt="explain query using post type and post status in where clause. Shows compound index being used because these two are the leftmost prefix of the compound index">
 				</section>
 
@@ -362,6 +364,7 @@
 
 				<!-- slide 25 -->
 				<section>
+					<p>(<mark>post_type, post_status</mark>, post_date, ID)</p>
 					<img class="plain" src="assets/pix/explain-compound-multiple-range-found.png" alt="explain query using post types and post status in where clause. Shows compound index being used because these two are the leftmost prefix of the compound index even when post type can be a number of different declared values">
 				</section>
 
@@ -369,6 +372,7 @@
 
 				<!-- slide 26 -->
 				<section>
+					<p>(post_type, <mark>post_status, post_date</mark>, ID)</p>
 					<img class="plain" src="assets/pix/explain-compound-multiple-notfound.png" alt="explain query using post status and post date. Shows not using index because it's parts 2 and 3">
 				</section>
 
@@ -377,6 +381,7 @@
 				<section>
 					<!-- slide 27.1 -->
 					<section>
+						<p>(<mark>post_type, post_status, post_date</mark>, ID)</p>
 						<img class="plain" src="assets/pix/explain-compound-multiple-found-2.png" alt="explain query using the first three parts of the compound index in the where clause. Shows it's using the compound index.">
 						<aside class="notes">
 							Note that the found rows is 51 here! That means that when using the index, MySQL returned 51 rows that matched the index.
@@ -397,6 +402,8 @@
 
 				<!-- slide 28 -->
 				<section>
+					<p>(<mark>post_type, post_status, post_date, ID</mark>)</p>
+					<p><mark style="background-color: lime;">ID (PRIMARY)</mark></p>
 					<img class="plain" src="assets/pix/explain-compound-multiple-id-exact-found.png" alt="explain query using all parts of the compound index, including the ID. Since the ID is also a primary index, this shows that the query is using the primary index. Because it's an equivalence, there's only 1 row returned.">
 					<aside class="notes">
 						Using all parts of the compound index, including the primary query. Because using the primary query would yield less results over using the compound index, that's the one being used. Because it's an equivalence, there is only one row returned.
@@ -408,6 +415,8 @@
 				<section>
 					<!-- slide 29.1 -->
 					<section>
+						<p>(<mark>post_type, post_status, post_date, ID</mark>)</p>
+						<p><mark style="background-color: lime;">ID (PRIMARY)</mark></p>
 						<img class="plain" src="assets/pix/explain-compound-multiple-id-range-found.png" alt="explain query using all parts of the compound query with the ID being a range comparison (less than). Because ID is also a primary key, it shows that the primary key is used for the query, and will return 69 results.">
 						<aside class="notes">
 							Here we're using ID as a range comparison. ID is also a primary key, so that's the one being used because it's faster. It shows that there would be 69 rows returned.
