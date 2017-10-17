@@ -144,13 +144,13 @@
 			focusBodyOnPageVisibilityChange: true,
 
 			// Transition style
-			transition: 'convex', // none/fade/slide/convex/concave/zoom
+			transition: 'none', // none/fade/slide/convex/concave/zoom
 
 			// Transition speed
 			transitionSpeed: 'default', // default/fast/slow
 
 			// Transition style for full page slide backgrounds
-			backgroundTransition: 'slide', // none/fade/slide/convex/concave/zoom
+			backgroundTransition: 'none', // none/fade/slide/convex/concave/zoom
 
 			// Parallax background image
 			parallaxBackgroundImage: '', // CSS syntax, e.g. "a.jpg"
